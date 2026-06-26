@@ -3,13 +3,25 @@
     <channel>
         <title>BlaBlaSpy Pro Plus 3000</title>
         <item>
+            <title>1.1</title>
+            <pubDate>Fri, 26 Jun 2026 18:23:38 +0200</pubDate>
+            <sparkle:version>1.1</sparkle:version>
+            <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy-1.1.zip" length="3375128" type="application/octet-stream" sparkle:edSignature="8KEfseCaaW0tuEUVnsycWtFfbvVmPjv2zHLQWBGFis/9v+r0Q1Hk6s/WOeMkfd0UJ+2vA0mdDSUFu2AvUWzkAw=="/>
+            <sparkle:deltas>
+                <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy%20Pro%20Plus%2030001.1-1.0.delta" sparkle:deltaFrom="1.0" length="261438" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="977616" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="C2AKL+qXn+lWBjm/1F2jqMD+hnwzyWQOuF/vpH35DbomUuFx0qJAPVCu/3lLLzV6Ew/yhL6lCZPSjFAsOnz4BQ=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
             <title>1.0</title>
             <pubDate>Fri, 26 Jun 2026 17:48:37 +0200</pubDate>
             <sparkle:version>1.0</sparkle:version>
             <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.0/BlaBlaSpy-1.0.zip" length="3356491" type="application/octet-stream" sparkle:edSignature="7AkvAFS9RidRaVLjjrbuVgwXLcHU4K02XmlppeSBBj7OeurFCOMWFLyoNbsYoxgoZteI4Rxb733UNTlTA3xGCg=="/>
+            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy-1.0.zip" length="3356491" type="application/octet-stream" sparkle:edSignature="7AkvAFS9RidRaVLjjrbuVgwXLcHU4K02XmlppeSBBj7OeurFCOMWFLyoNbsYoxgoZteI4Rxb733UNTlTA3xGCg=="/>
         </item>
     </channel>
 </rss>
