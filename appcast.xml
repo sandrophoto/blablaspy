@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>BlaBlaSpy Pro Plus 3000</title>
+        <item>
+            <title>1.0</title>
+            <pubDate>Fri, 26 Jun 2026 17:48:37 +0200</pubDate>
+            <sparkle:version>1.0</sparkle:version>
+            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.0/BlaBlaSpy-1.0.zip" length="3356491" type="application/octet-stream" sparkle:edSignature="7AkvAFS9RidRaVLjjrbuVgwXLcHU4K02XmlppeSBBj7OeurFCOMWFLyoNbsYoxgoZteI4Rxb733UNTlTA3xGCg=="/>
+        </item>
+    </channel>
+</rss>
