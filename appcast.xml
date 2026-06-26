@@ -9,7 +9,7 @@
             <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy-1.1.zip" length="3375128" type="application/octet-stream" sparkle:edSignature="8KEfseCaaW0tuEUVnsycWtFfbvVmPjv2zHLQWBGFis/9v+r0Q1Hk6s/WOeMkfd0UJ+2vA0mdDSUFu2AvUWzkAw=="/>
+            <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy-1.1.zip" length="3375128" type="application/octet-stream" sparkle:edSignature="FjG1nGI9trvAQ4X87wnhuD29LHhmWoNdX5uCa/00BgbytB9k3ak1Yc5TRpJg40Sn6Vajetcf9dYT7MDOKtQsAA=="/>
             <sparkle:deltas>
                 <enclosure url="https://github.com/sandrophoto/blablaspy/releases/download/v1.1/BlaBlaSpy%20Pro%20Plus%2030001.1-1.0.delta" sparkle:deltaFrom="1.0" length="261438" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="977616" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="C2AKL+qXn+lWBjm/1F2jqMD+hnwzyWQOuF/vpH35DbomUuFx0qJAPVCu/3lLLzV6Ew/yhL6lCZPSjFAsOnz4BQ=="/>
             </sparkle:deltas>
