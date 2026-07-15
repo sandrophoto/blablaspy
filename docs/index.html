@@ -70,6 +70,18 @@ nav .btn{padding:11px 16px}
   transition:color .2s,border-color .2s}
 .lnk:hover{color:var(--app);border-color:var(--app)}
 
+/* ---------- Téléchargement en pause ----------
+   Les binaires restent dans les Releases et les apps installées continuent
+   de se mettre à jour : seule la mise à disposition publique est suspendue. */
+.soon{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;padding:14px 22px;background:var(--yellow);color:var(--ink)}
+.soon::before{content:"";width:8px;height:8px;background:var(--ink);flex:none;
+  animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+nav .soon{padding:11px 16px;font-size:11px}
+.slab .soon{background:var(--ink);color:var(--paper)}
+.slab .soon::before{background:var(--paper)}
+
 /* ---------- HERO ---------- */
 .hero{display:grid;grid-template-columns:1fr}
 @media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
@@ -283,7 +295,7 @@ footer .mail:hover{border-color:var(--app-lite)}
         <a href="#features">Fonctions</a>
         <a href="#how">Comment ça marche</a>
         <a href="#tech">Technos</a>
-        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger <span class="ar">↓</span></a>
+        <span class="soon">Téléchargement en pause</span>
       </div>
     </div>
   </nav>
@@ -294,8 +306,8 @@ footer .mail:hover{border-color:var(--app-lite)}
       <h1>Tes réunions,<br>transcrites &amp; résumées.</h1>
       <p class="sub">BlaBlaSpy enregistre tes réunions <strong>Teams</strong>, <strong>Google&nbsp;Meet</strong> ou <strong>Zoom</strong>, les transcrit sur ton Mac, et génère un compte-rendu PDF clair : résumé, décisions, actions à mener.</p>
       <div class="cta">
-        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger pour macOS <span class="ar">↓</span></a>
-        <a class="lnk" href="https://github.com/sandrophoto/blablaspy">Voir le code</a>
+        <span class="soon">Téléchargement en pause</span>
+        
       </div>
       <p class="ver">Transcription locale (WhisperKit) · Résumé IA au choix · Mises à jour auto</p>
     </div>
@@ -426,7 +438,7 @@ footer .mail:hover{border-color:var(--app-lite)}
     <h2>Tes réunions restent sur ton Mac.</h2>
     <p class="lead">La transcription est 100% locale. Avec le résumé Apple Intelligence, rien ne quitte ta machine. Tu gardes le contrôle, et tu préviens les participant·es : l'enregistrement se fait avec leur accord.</p>
     <div class="cta">
-      <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger gratuitement <span class="ar">↓</span></a>
+      <span class="soon">Téléchargement en pause</span>
     </div>
   </div>
 
