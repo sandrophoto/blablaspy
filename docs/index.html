@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BlaBlaSpy Pro Plus 3000 — Enregistre, transcrit & résume tes réunions</title>
+<title>BlaBlaSpy Pro Plus 3000 — Enregistre, transcrit &amp; résume tes réunions</title>
 <meta name="description" content="App macOS qui enregistre vos réunions Teams, Meet ou Zoom, les transcrit en local et génère un compte-rendu PDF : résumé, décisions, actions." />
 <meta property="og:title" content="BlaBlaSpy Pro Plus 3000" />
 <meta property="og:description" content="Enregistre, transcrit et résume tes réunions — en local, sur ton Mac." />
@@ -11,304 +11,333 @@
 <link rel="icon" href="icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
 <style>
-  :root{
-    --bg:#0a0613; --bg2:#130a26;
-    --violet:#7c5cff; --violet-2:#a78bfa; --violet-deep:#4c1d95;
-    --cyan:#22d3ee; --pink:#e879f9;
-    --text:#ECE9F6; --muted:#a79fc4;
-    --glass:rgba(255,255,255,.055); --glass-brd:rgba(255,255,255,.12);
-    --radius:22px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Inter',system-ui,sans-serif;color:var(--text);
-    background:var(--bg);overflow-x:hidden;line-height:1.6;
-  }
-  h1,h2,h3,.display{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em}
+:root{
+  --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
+  --blue:#2340D4;--red:#E8412A;--yellow:#F7C51E;--white:#fff;
+  --bd:2px solid var(--ink);
+  --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+/* pas d'overflow:hidden ici — ça casserait le position:sticky de la nav */
+.frame{background:var(--paper);margin:10px;border:var(--bd)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
 
-  /* ---------- Fond animé (aurores + grain) ---------- */
-  .bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
-    radial-gradient(1200px 800px at 15% -10%, #2a1361 0%, transparent 55%),
-    radial-gradient(1000px 700px at 100% 0%, #1a2a6b 0%, transparent 50%),
-    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 60%, var(--bg) 100%);}
-  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;mix-blend-mode:screen;
-    animation:float 18s ease-in-out infinite}
-  .blob.a{width:520px;height:520px;left:-120px;top:-80px;background:radial-gradient(circle,#7c5cff,transparent 70%)}
-  .blob.b{width:460px;height:460px;right:-100px;top:120px;background:radial-gradient(circle,#22d3ee,transparent 70%);animation-delay:-6s}
-  .blob.c{width:600px;height:600px;left:30%;bottom:-260px;background:radial-gradient(circle,#e879f9,transparent 70%);animation-delay:-11s;opacity:.4}
-  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.08)}66%{transform:translate(-40px,30px) scale(.95)}}
-  .beam{position:absolute;top:-20%;left:50%;width:140%;height:140%;transform:translateX(-50%);
-    background:conic-gradient(from 90deg at 50% 0%, transparent 0deg, rgba(124,92,255,.10) 25deg, transparent 60deg, rgba(34,211,238,.08) 120deg, transparent 160deg);
-    animation:spin 40s linear infinite;z-index:-1;pointer-events:none}
-  @keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
-  .grain{position:fixed;inset:0;z-index:-1;opacity:.04;pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* ---------- NAV ---------- */
+nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.logo{display:flex;align-items:center;gap:6px;flex:none}
+.logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
+  font-size:10px;font-weight:700;display:grid;place-items:center}
+.logo .ci{width:18px;height:18px;border-radius:50%;background:var(--blue)}
+.logo .tr{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid var(--red)}
+.logo .rc{width:18px;height:18px;background:var(--yellow)}
+.logo .name{margin-left:8px;font-weight:800;letter-spacing:-.02em;font-size:16px;white-space:nowrap}
+.logo .ci,.logo .tr,.logo .rc{transition:transform .35s var(--ease)}
+.logo:hover .ci{transform:translateY(-4px)}
+.logo:hover .tr{transform:rotate(-15deg)}
+.logo:hover .rc{transform:rotate(45deg)}
+.nav-links{display:none;align-items:center;gap:30px}
+@media(min-width:900px){.nav-links{display:flex}}
+.nav-links a:not(.btn){font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  position:relative;padding:4px 0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);
+  transition:width .28s var(--ease)}
+.nav-links a:not(.btn):hover::after{width:100%}
 
-  /* ---------- Nav ---------- */
-  nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-    padding:14px 28px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-    background:rgba(10,6,19,.45);border-bottom:1px solid var(--glass-brd)}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-family:'Space Grotesk'}
-  .brand img{width:34px;height:34px;border-radius:9px;box-shadow:0 6px 18px rgba(124,92,255,.5)}
-  .nav-links{display:flex;align-items:center;gap:26px}
-  .nav-links a{color:var(--muted);text-decoration:none;font-size:.92rem;transition:color .25s}
-  .nav-links a:hover{color:var(--text)}
-  .btn{--glow:rgba(124,92,255,.6);display:inline-flex;align-items:center;gap:9px;cursor:pointer;
-    padding:12px 22px;border-radius:999px;font-weight:600;font-size:.95rem;text-decoration:none;color:#fff;
-    background:linear-gradient(135deg,var(--violet),#6d28d9);border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 8px 30px var(--glow), inset 0 1px 0 rgba(255,255,255,.25);
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s}
-  .btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 44px var(--glow), inset 0 1px 0 rgba(255,255,255,.4)}
-  .btn.ghost{background:var(--glass);box-shadow:none;color:var(--text);border:1px solid var(--glass-brd)}
-  .btn.ghost:hover{background:rgba(255,255,255,.1);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+/* ---------- BOUTONS ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;padding:13px 20px;border:var(--bd);
+  background:var(--ink);color:var(--paper);cursor:pointer;white-space:nowrap;
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--red)}
+.btn .ar{transition:transform .18s var(--ease)}
+.btn:hover .ar{transform:translateX(4px)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{box-shadow:4px 4px 0 var(--blue)}
+nav .btn{padding:11px 16px}
 
-  /* ---------- Layout ---------- */
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  section{padding:110px 0}
-  .eyebrow{display:inline-block;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--violet-2);padding:7px 14px;border:1px solid var(--glass-brd);border-radius:999px;
-    background:var(--glass);backdrop-filter:blur(8px)}
+/* ---------- HERO ---------- */
+.hero{display:grid;grid-template-columns:1fr;border-bottom:var(--bd)}
+@media(min-width:900px){.hero{grid-template-columns:1.15fr .85fr}}
+.hero-l{padding:60px 32px 54px;max-width:660px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:70px 48px 66px}}
+.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:22px 0 0}
+.hero .sub{margin-top:24px;font-size:16px;line-height:1.55;max-width:44ch;color:#2b2b2b}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.ver{margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
 
-  /* ---------- Hero ---------- */
-  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;
-    padding:90px 0 70px;min-height:88vh}
-  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;margin:22px 0 18px;font-weight:700}
-  .hero h1 .grad{background:linear-gradient(120deg,#fff 10%,var(--violet-2) 45%,var(--cyan) 90%);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p.lead{font-size:1.18rem;color:var(--muted);max-width:540px;margin-bottom:30px}
-  .cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .meta{margin-top:22px;color:var(--muted);font-size:.86rem;display:flex;gap:16px;flex-wrap:wrap}
-  .meta b{color:var(--text);font-weight:600}
+.hero-r{background:var(--blue);position:relative;overflow:hidden;min-height:420px;border-left:var(--bd);
+  display:grid;place-items:center}
+@media(max-width:899px){.hero-r{border-left:0;border-top:var(--bd);min-height:340px}}
+.hero-r .circle{position:absolute;top:-90px;right:-70px;width:280px;height:280px;border-radius:50%;
+  background:var(--yellow);animation:bob 9s ease-in-out infinite}
+/* centré : à gauche il chevaucherait la liste 01/02/03 */
+.hero-r .tri{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;
+  border-left:62px solid transparent;border-right:62px solid transparent;border-bottom:104px solid var(--red);
+  animation:slide 11s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(22px)}}
+@keyframes slide{50%{transform:translateX(-50%) translateY(-16px)}}
+.hero-r .icon{position:relative;z-index:2;width:132px;height:132px;border:var(--bd);background:var(--white);
+  display:grid;place-items:center;animation:bob2 7s ease-in-out infinite}
+.hero-r .icon img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes bob2{50%{transform:translateY(-12px)}}
+.hero-r .rules{position:absolute;left:32px;bottom:26px;z-index:2}
+.hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
+  text-transform:uppercase;margin-bottom:7px}
 
-  /* Carte produit flottante + onde */
-  .device{position:relative;display:flex;justify-content:center;align-items:center}
-  .glasscard{position:relative;width:340px;padding:34px;border-radius:30px;
-    background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
-    border:1px solid var(--glass-brd);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-    box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.25);
-    animation:cardfloat 7s ease-in-out infinite}
-  @keyframes cardfloat{0%,100%{transform:translateY(0) rotateX(0) rotateZ(0)}50%{transform:translateY(-16px)}}
-  .appicon{width:118px;height:118px;border-radius:27px;display:block;margin:0 auto 20px;
-    box-shadow:0 20px 50px rgba(124,92,255,.55);animation:pulseGlow 4s ease-in-out infinite}
-  @keyframes pulseGlow{0%,100%{box-shadow:0 20px 50px rgba(124,92,255,.45)}50%{box-shadow:0 24px 70px rgba(124,92,255,.8)}}
-  .wave{display:flex;align-items:center;justify-content:center;gap:6px;height:74px;margin-top:6px}
-  .wave span{width:7px;border-radius:6px;background:linear-gradient(180deg,#fff,var(--violet-2));
-    animation:eq 1.1s ease-in-out infinite}
-  @keyframes eq{0%,100%{height:14px;opacity:.6}50%{height:62px;opacity:1}}
-  .rec{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;color:var(--muted);font-size:.85rem}
-  .dot{width:11px;height:11px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 0 rgba(255,77,77,.6);animation:rec 1.6s infinite}
-  @keyframes rec{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}70%{box-shadow:0 0 0 16px rgba(255,77,77,0)}100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}}
+/* ---------- BANDEAU ---------- */
+.strip{display:flex;border-bottom:var(--bd);background:var(--paper);overflow-x:auto;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip .cell{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  padding:16px 24px;border-right:var(--bd);white-space:nowrap;transition:background .4s var(--ease)}
+.strip .cell:last-child{border-right:0;flex:1}
+.strip .cell.on{background:var(--yellow)}
 
-  /* ---------- Reveal ---------- */
-  .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+/* ---------- SECTIONS ---------- */
+section{padding:60px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
+h2{font-size:clamp(28px,4.2vw,50px);font-weight:900;line-height:.98;letter-spacing:-.03em}
+.lead{font-size:16px;line-height:1.55;color:#3a3a3a;max-width:56ch;margin-top:12px}
 
-  /* ---------- Sections titres ---------- */
-  .head{text-align:center;max-width:680px;margin:0 auto 56px}
-  .head h2{font-size:clamp(2rem,4vw,3rem);margin:18px 0 14px}
-  .head p{color:var(--muted);font-size:1.08rem}
+/* ---------- GRILLES (fond noir = filets de 2px) ----------
+   Colonnes fixées par palier : 6 tuiles se divisent par 1, 2 et 3 —
+   jamais de case noire vide en fin de grille. */
+.tiles{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
+@media(min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{background:var(--paper);padding:26px;position:relative;
+  transition:background .25s var(--ease),color .25s var(--ease)}
+.tile::before{content:"";position:absolute;left:0;top:0;height:100%;width:6px;background:var(--accent,var(--blue));
+  transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
+.tile:hover::before{transform:scaleY(1)}
+.tile:hover{background:var(--ink);color:var(--paper)}
+.tile .ic{font-size:24px;margin-bottom:14px;display:block}
+.tile h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
+.tile p{font-size:14px;line-height:1.5;color:#3a3a3a;transition:color .25s}
+.tile:hover p{color:#c9c9c9}
 
-  /* ---------- Features ---------- */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{position:relative;padding:28px;border-radius:var(--radius);background:var(--glass);
-    border:1px solid var(--glass-brd);backdrop-filter:blur(14px);overflow:hidden;
-    transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
-  .card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(124,92,255,.18),transparent 60%);opacity:0;transition:opacity .4s}
-  .card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.5);box-shadow:0 24px 60px rgba(0,0,0,.45)}
-  .card:hover::before{opacity:1}
-  .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:16px;
-    background:linear-gradient(140deg,rgba(124,92,255,.35),rgba(34,211,238,.18));border:1px solid var(--glass-brd)}
-  .card h3{font-size:1.18rem;margin-bottom:8px}
-  .card p{color:var(--muted);font-size:.96rem}
+/* ---------- ÉTAPES ---------- */
+/* 4 étapes : 1, 2 ou 4 colonnes — la grille tombe toujours juste. */
+.steps{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
+@media(min-width:560px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{background:var(--paper);padding:26px;transition:background .25s var(--ease)}
+.step:hover{background:var(--yellow)}
+.step .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--red);margin-bottom:12px}
+.step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 
-  /* ---------- Steps ---------- */
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
-  .step{position:relative;padding:26px 22px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--glass-brd);backdrop-filter:blur(12px)}
-  .step .n{counter-increment:s;font-family:'Space Grotesk';font-size:2.4rem;font-weight:700;
-    background:linear-gradient(120deg,var(--violet-2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .step .n::before{content:"0" counter(s)}
-  .step h3{font-size:1.05rem;margin:6px 0 6px}
-  .step p{color:var(--muted);font-size:.9rem}
+/* ---------- TECHNOS ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  padding:13px 18px;border:var(--bd);background:var(--paper);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s var(--ease),color .18s var(--ease)}
+.chip:hover{background:var(--ink);color:var(--paper);transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--blue)}
 
-  /* ---------- Tech ---------- */
-  .tech{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-  .chip{padding:11px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-brd);
-    backdrop-filter:blur(10px);font-size:.92rem;color:var(--text);display:flex;align-items:center;gap:8px;
-    transition:transform .25s,border-color .25s}
-  .chip:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.6)}
+/* ---------- CTA FINALE ---------- */
+.final{border:var(--bd);background:var(--yellow);padding:56px 32px;text-align:center;position:relative;overflow:hidden}
+.final .sq1{position:absolute;top:-30px;left:-30px;width:110px;height:110px;background:var(--blue);
+  animation:rot 18s linear infinite}
+.final .sq2{position:absolute;bottom:-36px;right:-20px;width:0;height:0;border-left:56px solid transparent;
+  border-right:56px solid transparent;border-bottom:92px solid var(--red);animation:bob 8s ease-in-out infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.final .eyebrow{position:relative;z-index:2;color:var(--red);display:block;margin-bottom:14px}
+.final h2{position:relative;z-index:2}
+.final .lead{position:relative;z-index:2;margin:14px auto 28px;color:#2b2b2b;text-align:center}
+.final .cta{position:relative;z-index:2;justify-content:center}
 
-  /* ---------- Privacy band ---------- */
-  .band{position:relative;border-radius:32px;padding:60px 40px;text-align:center;overflow:hidden;
-    background:linear-gradient(135deg,rgba(124,92,255,.22),rgba(34,211,238,.10));border:1px solid var(--glass-brd);
-    backdrop-filter:blur(16px)}
-  .band h2{font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:14px}
-  .band p{color:var(--muted);max-width:560px;margin:0 auto 26px}
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:var(--paper);padding:56px 0 50px;margin-top:10px}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+footer h2{font-size:clamp(28px,3.6vw,40px)}
+footer .mail{display:inline-block;margin-top:12px;color:var(--yellow);font-family:var(--mono);font-size:14px;
+  border-bottom:2px solid transparent;transition:border-color .22s}
+footer .mail:hover{border-color:var(--yellow)}
+.foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8f8f8f;line-height:1.9}
+.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--yellow)}
 
-  /* ---------- Footer ---------- */
-  footer{padding:60px 0 50px;border-top:1px solid var(--glass-brd);text-align:center;color:var(--muted)}
-  .studio{font-family:'Space Grotesk';font-weight:700;font-size:1.1rem;
-    background:linear-gradient(120deg,var(--violet-2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-  footer a{color:var(--violet-2);text-decoration:none}
-  footer a:hover{text-decoration:underline}
-
-  @media(max-width:880px){
-    .hero{grid-template-columns:1fr;text-align:center;gap:30px;padding-top:40px}
-    .cta,.meta{justify-content:center}
-    .grid{grid-template-columns:1fr}
-    .steps{grid-template-columns:1fr 1fr}
-    .nav-links a:not(.btn){display:none}
-  }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* ---------- RÉVÉLATION ----------
+   Amélioration progressive : l'état masqué n'existe que si JS est actif. */
+.js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
+  transition:clip-path .7s var(--ease),transform .7s var(--ease)}
+.js .rv.in{clip-path:inset(0 0 0 0);transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{clip-path:none;transform:none}
+}
 </style>
 </head>
 <body>
-<div class="bg"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
-<div class="beam"></div>
-<div class="grain"></div>
+<div class="frame">
 
-<nav>
-  <div class="brand"><img src="icon.png" alt="BlaBlaSpy"/> BlaBlaSpy</div>
-  <div class="nav-links">
-    <a href="#features">Fonctions</a>
-    <a href="#how">Comment ça marche</a>
-    <a href="#tech">Technos</a>
-    <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">⬇ Télécharger</a>
-  </div>
-</nav>
+  <nav>
+    <div class="wrap nav-in">
+      <a class="logo" href="#top" aria-label="BlaBlaSpy — STUPID STUDIO">
+        <span class="sq">1a</span><span class="ci"></span><span class="tr"></span><span class="rc"></span>
+        <span class="name">BlaBlaSpy</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Fonctions</a>
+        <a href="#how">Comment ça marche</a>
+        <a href="#tech">Technos</a>
+        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger <span class="ar">↓</span></a>
+      </div>
+    </div>
+  </nav>
 
-<div class="wrap">
-
-  <!-- HERO -->
-  <header class="hero">
-    <div>
-      <span class="eyebrow">macOS · 100% local · gratuit</span>
-      <h1>Tes réunions,<br><span class="grad">transcrites & résumées.</span></h1>
-      <p class="lead">BlaBlaSpy enregistre tes réunions <b>Teams</b>, <b>Google&nbsp;Meet</b> ou <b>Zoom</b>,
-        les transcrit sur ton Mac, et génère un compte-rendu PDF clair : résumé, décisions, actions à mener.</p>
+  <div class="hero" id="top">
+    <div class="hero-l">
+      <p class="eyebrow" style="color:var(--blue)">MACOS · 100% LOCAL · GRATUIT</p>
+      <h1>Tes réunions,<br>transcrites &amp; résumées.</h1>
+      <p class="sub">BlaBlaSpy enregistre tes réunions <strong>Teams</strong>, <strong>Google&nbsp;Meet</strong> ou <strong>Zoom</strong>, les transcrit sur ton Mac, et génère un compte-rendu PDF clair : résumé, décisions, actions à mener.</p>
       <div class="cta">
-        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">⬇ Télécharger pour macOS</a>
+        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger pour macOS <span class="ar">↓</span></a>
         <a class="btn ghost" href="https://github.com/sandrophoto/blablaspy">Voir le code</a>
       </div>
-      <div class="meta">
-        <span>🔒 <b>Transcription locale</b> (WhisperKit)</span>
-        <span>🧠 <b>Résumé IA</b> au choix</span>
-        <span>🔄 <b>Mises à jour auto</b></span>
+      <p class="ver">Transcription locale (WhisperKit) · Résumé IA au choix · Mises à jour auto</p>
+    </div>
+    <div class="hero-r">
+      <div class="circle"></div>
+      <div class="tri"></div>
+      <div class="icon"><img src="icon.png" alt="Icône BlaBlaSpy"></div>
+      <div class="rules">
+        <div>01 / TEAMS · MEET · ZOOM</div>
+        <div>02 / TRANSCRIPTION LOCALE</div>
+        <div>03 / COMPTE-RENDU PDF</div>
       </div>
     </div>
-    <div class="device">
-      <div class="glasscard">
-        <img class="appicon" src="icon.png" alt="Icône BlaBlaSpy"/>
-        <div class="wave" id="wave"></div>
-        <div class="rec"><span class="dot"></span> Enregistrement en cours…</div>
+  </div>
+
+  <div class="strip" id="strip">
+    <div class="cell">CAPTURE · 2 PISTES</div>
+    <div class="cell">TRANSCRIPTION · WHISPERKIT</div>
+    <div class="cell">RÉSUMÉ · APPLE · CLAUDE · CHATGPT</div>
+    <div class="cell">EXPORT · PDF &amp; TXT</div>
+    <div class="cell">100% LOCAL</div>
+  </div>
+
+  <section id="features" class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow rv" style="color:var(--red)">FONCTIONS</p>
+        <h2 class="rv" style="margin-top:14px">Tout ce qu'il faut,<br>rien de superflu.</h2>
+      </div>
+      <p class="note rv">De l'enregistrement au compte-rendu prêt à partager.</p>
+    </div>
+    <div class="tiles rv">
+      <div class="tile" style="--accent:var(--blue)"><span class="ic">🎙️</span><h3>Capture 2 pistes</h3><p>Le son des participants (système) et ta voix (micro) sont captés séparément — même en clamshell ou avec une interface audio.</p></div>
+      <div class="tile" style="--accent:var(--red)"><span class="ic">⚡</span><h3>Transcription locale</h3><p>WhisperKit tourne sur le Neural Engine de ton Mac. Aucun audio n'est envoyé sur Internet.</p></div>
+      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🌍</span><h3>FR · EN · Auto</h3><p>Détection automatique de la langue, gérée piste par piste. Le bilinguisme ? Pas un souci.</p></div>
+      <div class="tile" style="--accent:var(--blue)"><span class="ic">🧠</span><h3>Résumé au choix</h3><p>Apple Intelligence (gratuit, local), Claude ou ChatGPT. Résumé, décisions, actions, points en suspens.</p></div>
+      <div class="tile" style="--accent:var(--red)"><span class="ic">📄</span><h3>Export PDF &amp; .txt</h3><p>Un compte-rendu mis en page, et la transcription brute. L'audio mixé en .m4a si tu veux.</p></div>
+      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🔄</span><h3>Mises à jour auto</h3><p>L'app se met à jour toute seule via Sparkle. Toujours la dernière version, sans effort.</p></div>
+    </div>
+  </section>
+
+  <section id="how" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow rv" style="color:var(--blue)">COMMENT ÇA MARCHE</p>
+        <h2 class="rv" style="margin-top:14px">Quatre étapes,<br>c'est tout.</h2>
+      </div>
+      <p class="note rv">Du gros bouton rouge au PDF, sans détour.</p>
+    </div>
+    <div class="steps rv">
+      <div class="step"><div class="n">01</div><h4>Enregistre</h4><p>Lance ta réunion et clique sur le gros bouton rouge.</p></div>
+      <div class="step"><div class="n">02</div><h4>Les présents</h4><p>Renseigne qui était là (noms pré-remplis, éditables).</p></div>
+      <div class="step"><div class="n">03</div><h4>Transcris</h4><p>La transcription locale démarre et défile en direct.</p></div>
+      <div class="step"><div class="n">04</div><h4>Exporte</h4><p>Choisis les analyses, génère le PDF, c'est prêt.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:0">
+    <div class="final rv">
+      <div class="sq1"></div>
+      <div class="sq2"></div>
+      <p class="eyebrow">CONFIDENTIALITÉ</p>
+      <h2>Tes réunions restent sur ton Mac.</h2>
+      <p class="lead">La transcription est 100% locale. Avec le résumé Apple Intelligence, rien ne quitte ta machine. Tu gardes le contrôle, et tu préviens les participant·es : l'enregistrement se fait avec leur accord.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger gratuitement <span class="ar">↓</span></a>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- FEATURES -->
-  <section id="features">
-    <div class="head reveal">
-      <span class="eyebrow">Fonctions</span>
-      <h2>Tout ce qu'il faut, rien de superflu</h2>
-      <p>De l'enregistrement au compte-rendu prêt à partager — en quelques clics.</p>
+  <section id="tech" class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow rv" style="color:var(--red)">SOUS LE CAPOT</p>
+        <h2 class="rv" style="margin-top:14px">La recette maison.</h2>
+      </div>
+      <p class="note rv">Du natif, performant, sans dépendance à installer.</p>
     </div>
-    <div class="grid">
-      <div class="card reveal"><div class="ico">🎙️</div><h3>Capture 2 pistes</h3><p>Le son des participants (système) et ta voix (micro) sont captés séparément — même en clamshell ou avec une interface audio.</p></div>
-      <div class="card reveal"><div class="ico">⚡</div><h3>Transcription locale</h3><p>WhisperKit tourne sur le Neural Engine de ton Mac. Aucun audio n'est envoyé sur Internet.</p></div>
-      <div class="card reveal"><div class="ico">🌍</div><h3>FR · EN · Auto</h3><p>Détection automatique de la langue, gérée piste par piste. Le bilinguisme ? Pas un souci.</p></div>
-      <div class="card reveal"><div class="ico">🧠</div><h3>Résumé au choix</h3><p>Apple Intelligence (gratuit, local), Claude ou ChatGPT. Résumé, décisions, actions, points en suspens.</p></div>
-      <div class="card reveal"><div class="ico">📄</div><h3>Export PDF & .txt</h3><p>Un compte-rendu mis en page, et la transcription brute. L'audio mixé en .m4a si tu veux.</p></div>
-      <div class="card reveal"><div class="ico">🔄</div><h3>Mises à jour auto</h3><p>L'app se met à jour toute seule via Sparkle. Toujours la dernière version, sans effort.</p></div>
+    <div class="chips rv">
+      <div class="chip">ScreenCaptureKit</div>
+      <div class="chip">AVFoundation</div>
+      <div class="chip">WhisperKit</div>
+      <div class="chip">Apple Intelligence</div>
+      <div class="chip">Claude · ChatGPT</div>
+      <div class="chip">Sparkle</div>
+      <div class="chip">SwiftUI</div>
     </div>
   </section>
 
-  <!-- HOW -->
-  <section id="how">
-    <div class="head reveal">
-      <span class="eyebrow">Comment ça marche</span>
-      <h2>Quatre étapes, c'est tout</h2>
+  <footer>
+    <div class="wrap foot-in">
+      <div>
+        <h2>Dis bonjour.</h2>
+        <a class="mail" href="mailto:sandro@tigre.paris">sandro@tigre.paris</a>
+      </div>
+      <div class="foot-r">
+        <div><a href="https://sandrophoto.github.io/">TOUTES LES APPS</a> · <a href="https://github.com/sandrophoto/blablaspy">GITHUB</a> · <a href="https://stupidstudio.eu">STUPIDSTUDIO.EU</a></div>
+        <div>© 2026 STUPID STUDIO</div>
+        <div>DES APPS MACOS QUI FONT UNE CHOSE, TRÈS BIEN</div>
+      </div>
     </div>
-    <div class="steps">
-      <div class="step reveal"><div class="n"></div><h3>Enregistre</h3><p>Lance ta réunion et clique sur le gros bouton rouge.</p></div>
-      <div class="step reveal"><div class="n"></div><h3>Les présents</h3><p>Renseigne qui était là (noms pré-remplis, éditables).</p></div>
-      <div class="step reveal"><div class="n"></div><h3>Transcris</h3><p>La transcription locale démarre et défile en direct.</p></div>
-      <div class="step reveal"><div class="n"></div><h3>Exporte</h3><p>Choisis les analyses, génère le PDF, c'est prêt.</p></div>
-    </div>
-  </section>
-
-  <!-- PRIVACY BAND -->
-  <section>
-    <div class="band reveal">
-      <span class="eyebrow">Confidentialité</span>
-      <h2>Tes réunions restent sur ton Mac</h2>
-      <p>La transcription est 100% locale. Avec le résumé Apple Intelligence, rien ne quitte ta machine.
-         Tu gardes le contrôle, et tu préviens les participant·es : l'enregistrement se fait avec leur accord.</p>
-      <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">⬇ Télécharger gratuitement</a>
-    </div>
-  </section>
-
-  <!-- TECH -->
-  <section id="tech">
-    <div class="head reveal">
-      <span class="eyebrow">Sous le capot</span>
-      <h2>La recette maison</h2>
-      <p>Du natif, performant, sans dépendance à installer.</p>
-    </div>
-    <div class="tech reveal">
-      <div class="chip">🎛️ ScreenCaptureKit</div>
-      <div class="chip">🎧 AVFoundation</div>
-      <div class="chip">🗣️ WhisperKit</div>
-      <div class="chip">✨ Apple Intelligence</div>
-      <div class="chip">🤖 Claude · ChatGPT</div>
-      <div class="chip">📦 Sparkle</div>
-      <div class="chip">🦅 SwiftUI</div>
-    </div>
-  </section>
+  </footer>
 
 </div>
 
-<footer>
-  <div class="wrap">
-    <p class="studio">STUPID STUDIO</p>
-    <p style="margin:10px 0">
-      <a href="https://github.com/sandrophoto/blablaspy">GitHub</a> ·
-      <a href="https://stupidstudio.eu">stupidstudio.eu</a> ·
-      <a href="mailto:sandro@tigre.paris">Contact</a> ·
-      <a href="https://sandrophoto.github.io/">Toutes les apps</a>
-    </p>
-    <p style="font-size:.82rem;opacity:.7">© 2026 STUPID STUDIO — Des apps macOS qui font une chose, très bien.</p>
-  </div>
-</footer>
-
 <script>
-  // Onde sonore animée (barres avec délais aléatoires)
-  const wave = document.getElementById('wave');
-  if (wave){ for(let i=0;i<22;i++){ const s=document.createElement('span');
-    s.style.animationDelay = (-(Math.random()*1.1)).toFixed(2)+'s';
-    s.style.animationDuration = (0.7+Math.random()*0.8).toFixed(2)+'s';
-    wave.appendChild(s);} }
-
-  // Scroll reveal
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-  },{threshold:.15});
-  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%6*60)+'ms'; io.observe(el); });
-
-  // Lueur qui suit la souris sur les cartes
-  document.querySelectorAll('.card').forEach(c=>{
-    c.addEventListener('mousemove',e=>{ const r=c.getBoundingClientRect();
-      c.style.setProperty('--mx',(e.clientX-r.left)+'px');
-      c.style.setProperty('--my',(e.clientY-r.top)+'px'); });
+/* Révélation au scroll — volet net, en cascade.
+   Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
+   une poignée d'éléments, c'est gratuit, et ça ne peut pas laisser la
+   page vide si l'observer ne se déclenche pas. */
+let rvs=[...document.querySelectorAll('.rv')];
+rvs.forEach((el,i)=>el.style.transitionDelay=(i%4*70)+'ms');
+function reveal(){
+  if(!rvs.length) return;
+  rvs=rvs.filter(el=>{
+    if(el.getBoundingClientRect().top > innerHeight-80) return true;
+    el.classList.add('in');return false;
   });
+}
+addEventListener('scroll',reveal,{passive:true});
+addEventListener('resize',reveal);
+addEventListener('load',reveal);
+requestAnimationFrame(reveal);
 
-  // Parallaxe douce de la carte produit
-  const card = document.querySelector('.glasscard');
-  if(card){ window.addEventListener('mousemove',e=>{
-    const x=(e.clientX/window.innerWidth-.5), y=(e.clientY/window.innerHeight-.5);
-    card.style.transform=`translateY(${Math.sin(Date.now()/1500)*8}px) rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
-  }); }
+/* Bandeau : la cellule jaune se déplace de cellule en cellule */
+const cells=[...document.querySelectorAll('#strip .cell')];
+let ci=0;
+function tickStrip(){
+  cells.forEach(c=>c.classList.remove('on'));
+  cells[ci].classList.add('on');
+  ci=(ci+1)%cells.length;
+}
+tickStrip();
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(tickStrip,2200);
 </script>
 </body>
 </html>
