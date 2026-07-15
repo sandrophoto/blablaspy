@@ -9,6 +9,7 @@
 <meta property="og:description" content="Enregistre, transcrit et résume tes réunions — en local, sur ton Mac." />
 <meta property="og:image" content="icon.png" />
 <link rel="icon" href="icon.png" />
+<meta name="theme-color" content="#F2EFE6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,24 +17,26 @@
 <style>
 :root{
   --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
-  --blue:#2340D4;--red:#E8412A;--yellow:#F7C51E;--white:#fff;
-  --bd:2px solid var(--ink);
+  --red:#E8412A;--yellow:#F7C51E;--blue:#2340D4;--white:#fff;
+  /* couleur de CETTE app, extraite de son icône */
+  --app:#5D41BB;--panel:#553BAA;
+  /* tint du violet, uniquement pour les aplats posés sur l'encre */
+  --app-lite:#8E6FE8;
   --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+/* v2 : plus de cadre de page. Le papier va bord à bord. */
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-/* pas d'overflow:hidden ici — ça casserait le position:sticky de la nav */
-.frame{background:var(--paper);margin:10px;border:var(--bd)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
-.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--app)}
 
-/* ---------- NAV ---------- */
-nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-index:60}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+/* ---------- NAV — un filet, pas une boîte ---------- */
+nav{border-bottom:2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
 .logo{display:flex;align-items:center;gap:6px;flex:none}
 .logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
   font-size:10px;font-weight:700;display:grid;place-items:center}
@@ -49,137 +52,173 @@ nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-inde
 @media(min-width:900px){.nav-links{display:flex}}
 .nav-links a:not(.btn){font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
   position:relative;padding:4px 0}
-.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--app);
   transition:width .28s var(--ease)}
 .nav-links a:not(.btn):hover::after{width:100%}
 
-/* ---------- BOUTONS ---------- */
+/* ---------- BOUTONS — un seul plein, le reste en liens soulignés ---------- */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
-  text-transform:uppercase;letter-spacing:.1em;padding:13px 20px;border:var(--bd);
+  text-transform:uppercase;letter-spacing:.1em;padding:14px 22px;border:0;
   background:var(--ink);color:var(--paper);cursor:pointer;white-space:nowrap;
   transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--red)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--app)}
 .btn .ar{transition:transform .18s var(--ease)}
 .btn:hover .ar{transform:translateX(4px)}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.ghost:hover{box-shadow:4px 4px 0 var(--blue)}
 nav .btn{padding:11px 16px}
+.lnk{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s}
+.lnk:hover{color:var(--app);border-color:var(--app)}
 
 /* ---------- HERO ---------- */
-.hero{display:grid;grid-template-columns:1fr;border-bottom:var(--bd)}
-@media(min-width:900px){.hero{grid-template-columns:1.15fr .85fr}}
-.hero-l{padding:60px 32px 54px;max-width:660px;margin-left:auto;width:100%}
-@media(min-width:900px){.hero-l{padding:70px 48px 66px}}
-.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:22px 0 0}
-.hero .sub{margin-top:24px;font-size:16px;line-height:1.55;max-width:44ch;color:#2b2b2b}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
-.ver{margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
+.hero{display:grid;grid-template-columns:1fr}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero-l{padding:66px 32px 60px;max-width:680px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:80px 52px 74px}}
+.hero h1{font-size:clamp(40px,5.4vw,74px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:24px 0 0}
+.hero .sub{margin-top:24px;font-size:16.5px;line-height:1.55;max-width:44ch;color:#2b2b2b}
+.cta{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:34px}
+.ver{margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
 
-.hero-r{background:var(--blue);position:relative;overflow:hidden;min-height:420px;border-left:var(--bd);
+/* panneau : aplat qui saigne, aucune bordure */
+.hero-r{background:var(--panel);position:relative;overflow:hidden;min-height:500px;
   display:grid;place-items:center}
-@media(max-width:899px){.hero-r{border-left:0;border-top:var(--bd);min-height:340px}}
-.hero-r .circle{position:absolute;top:-90px;right:-70px;width:280px;height:280px;border-radius:50%;
+@media(max-width:899px){.hero-r{min-height:420px}}
+.hero-r .circle{position:absolute;top:-110px;right:-80px;width:290px;height:290px;border-radius:50%;
   background:var(--yellow);animation:bob 9s ease-in-out infinite}
-/* centré : à gauche il chevaucherait la liste 01/02/03 */
-.hero-r .tri{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;
-  border-left:62px solid transparent;border-right:62px solid transparent;border-bottom:104px solid var(--red);
-  animation:slide 11s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(22px)}}
-@keyframes slide{50%{transform:translateX(-50%) translateY(-16px)}}
-.hero-r .icon{position:relative;z-index:2;width:132px;height:132px;border:var(--bd);background:var(--white);
-  display:grid;place-items:center;animation:bob2 7s ease-in-out infinite}
-.hero-r .icon img{width:100%;height:100%;object-fit:cover;display:block}
-@keyframes bob2{50%{transform:translateY(-12px)}}
+@keyframes bob{50%{transform:translateY(20px)}}
+.par{transition:translate .5s var(--ease)}
+
+/* ---------- EFFET SIGNATURE : la réunion qu'on écoute ----------
+   Deux VU-mètres qui bougent chacun pour soi (capture système + micro,
+   les deux pistes de ScreenCaptureKit), et la transcription qui s'écrit
+   dessous, mot à mot, en alternant les locuteurs. */
+.mtg{position:relative;z-index:2;width:min(410px,84%);background:var(--ink);padding:18px}
+.mtg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.mtg-head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8f8f8f}
+.rec{display:flex;align-items:center;gap:6px;color:var(--paper)!important}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 1.4s steps(2) infinite}
+@keyframes pulse{50%{opacity:.2}}
+
+.vu{margin-bottom:10px}
+.vu .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  display:block;margin-bottom:5px;opacity:.55;transition:opacity .25s}
+.vu.on .lbl{opacity:1}
+.vu.sys .lbl{color:var(--app-lite)}
+.vu.mic .lbl{color:var(--yellow)}
+.vu .lane{height:16px;background:#242424;position:relative;overflow:hidden}
+.vu .fill{position:absolute;left:0;top:0;height:100%}
+.vu.sys .fill{background:var(--app-lite);width:64%;animation:lvlA 4.6s steps(1,end) infinite}
+.vu.mic .fill{background:var(--yellow);width:34%;animation:lvlB 3.1s steps(1,end) infinite}
+/* la trame de segments : des filets d'encre posés PAR-DESSUS le niveau */
+.vu .segs{position:absolute;inset:0;display:flex}
+.vu .segs i{flex:1;border-right:2px solid var(--ink)}
+@keyframes lvlA{
+  0%{width:18%}7%{width:56%}14%{width:38%}21%{width:74%}28%{width:47%}35%{width:88%}
+  42%{width:29%}49%{width:63%}56%{width:41%}63%{width:79%}70%{width:22%}77%{width:58%}
+  84%{width:35%}91%{width:69%}100%{width:18%}}
+@keyframes lvlB{
+  0%{width:12%}9%{width:44%}18%{width:26%}27%{width:61%}36%{width:33%}45%{width:17%}
+  54%{width:52%}63%{width:71%}72%{width:38%}81%{width:24%}90%{width:49%}100%{width:12%}}
+
+/* la transcription qui s'écrit */
+.scr{height:96px;overflow:hidden;margin-top:16px}
+.ln{font-family:var(--mono);font-size:11px;line-height:1.55;color:var(--paper);margin-bottom:4px}
+.ln b{font-weight:700;letter-spacing:.1em;margin-right:8px}
+.ln b.sys{color:var(--app-lite)}
+.ln b.mic{color:var(--yellow)}
+.scr .ln:last-child span::after{content:"";display:inline-block;width:6px;height:11px;
+  background:var(--paper);margin-left:3px;vertical-align:-1px;animation:caret .9s steps(2) infinite}
+@keyframes caret{50%{opacity:0}}
+.mtg-foot{display:flex;justify-content:space-between;margin-top:14px}
+.mtg-foot span{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#8f8f8f}
+.mtg-foot b{color:var(--app-lite);font-weight:400}
+
 .hero-r .rules{position:absolute;left:32px;bottom:26px;z-index:2}
 .hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
   text-transform:uppercase;margin-bottom:7px}
+@media(max-width:620px){.hero-r .rules{display:none}}
 
-/* ---------- BANDEAU ---------- */
-.strip{display:flex;border-bottom:var(--bd);background:var(--paper);overflow-x:auto;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.strip .cell{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
-  padding:16px 24px;border-right:var(--bd);white-space:nowrap;transition:background .4s var(--ease)}
-.strip .cell:last-child{border-right:0;flex:1}
-.strip .cell.on{background:var(--yellow)}
+/* ---------- TICKER — aplat plein ---------- */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:15px 0}
+.ticker .track{display:flex;width:max-content;animation:scrollx 32s linear infinite}
+.ticker b{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;
+  letter-spacing:.14em;white-space:nowrap;display:flex;align-items:center;gap:38px;padding-right:38px}
+.ticker b::after{content:"";width:7px;height:7px;background:var(--app-lite);flex:none}
+@keyframes scrollx{to{transform:translateX(-50%)}}
 
 /* ---------- SECTIONS ---------- */
-section{padding:60px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+section{padding:74px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  border-top:2px solid var(--ink);padding-top:16px;margin-bottom:40px}
 .sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
-h2{font-size:clamp(28px,4.2vw,50px);font-weight:900;line-height:.98;letter-spacing:-.03em}
+h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spacing:-.03em}
 .lead{font-size:16px;line-height:1.55;color:#3a3a3a;max-width:56ch;margin-top:12px}
 
-/* ---------- GRILLES (fond noir = filets de 2px) ----------
-   Colonnes fixées par palier : 6 tuiles se divisent par 1, 2 et 3 —
-   jamais de case noire vide en fin de grille. */
-.tiles{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
-@media(min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:980px){.tiles{grid-template-columns:repeat(3,1fr)}}
-.tile{background:var(--paper);padding:26px;position:relative;
-  transition:background .25s var(--ease),color .25s var(--ease)}
-.tile::before{content:"";position:absolute;left:0;top:0;height:100%;width:6px;background:var(--accent,var(--blue));
-  transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
-.tile:hover::before{transform:scaleY(1)}
-.tile:hover{background:var(--ink);color:var(--paper)}
-.tile .ic{font-size:24px;margin-bottom:14px;display:block}
+/* ---------- TUILES — un filet en haut, pas de boîte ---------- */
+.tiles{display:grid;grid-template-columns:1fr;gap:0 44px}
+@media(min-width:700px){.tiles{grid-template-columns:1fr 1fr}}
+@media(min-width:1040px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{padding:20px 0 28px;border-top:2px solid var(--ink)}
+.tile .ic{font-size:22px;display:block;margin-bottom:12px}
 .tile h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
-.tile p{font-size:14px;line-height:1.5;color:#3a3a3a;transition:color .25s}
-.tile:hover p{color:#c9c9c9}
+.tile p{font-size:14px;line-height:1.5;color:#3a3a3a}
+.tile .bar{height:4px;width:0;background:var(--app);margin-top:14px;transition:width .35s var(--ease)}
+.tile:hover .bar{width:44px}
 
-/* ---------- ÉTAPES ---------- */
-/* 4 étapes : 1, 2 ou 4 colonnes — la grille tombe toujours juste. */
-.steps{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
-@media(min-width:560px){.steps{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:980px){.steps{grid-template-columns:repeat(4,1fr)}}
-.step{background:var(--paper);padding:26px;transition:background .25s var(--ease)}
-.step:hover{background:var(--yellow)}
-.step .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--red);margin-bottom:12px}
+/* ---------- ÉTAPES — gros chiffres, aucune carte ---------- */
+.steps{display:grid;grid-template-columns:1fr;gap:34px 44px}
+@media(min-width:600px){.steps{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step .n{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--app);line-height:1;margin-bottom:12px}
 .step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 
-/* ---------- TECHNOS ---------- */
-.chips{display:flex;flex-wrap:wrap;gap:12px}
+/* ---------- TECHNOS — des aplats, pas des cadres ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
-  padding:13px 18px;border:var(--bd);background:var(--paper);
-  transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s var(--ease),color .18s var(--ease)}
-.chip:hover{background:var(--ink);color:var(--paper);transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--blue)}
+  padding:13px 18px;background:var(--paper-2);
+  transition:transform .18s var(--ease),background .18s var(--ease),color .18s var(--ease)}
+.chip:hover{background:var(--app);color:var(--paper);transform:translate(-3px,-3px)}
 
-/* ---------- CTA FINALE ---------- */
-.final{border:var(--bd);background:var(--yellow);padding:56px 32px;text-align:center;position:relative;overflow:hidden}
-.final .sq1{position:absolute;top:-30px;left:-30px;width:110px;height:110px;background:var(--blue);
-  animation:rot 18s linear infinite}
-.final .sq2{position:absolute;bottom:-36px;right:-20px;width:0;height:0;border-left:56px solid transparent;
-  border-right:56px solid transparent;border-bottom:92px solid var(--red);animation:bob 8s ease-in-out infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-.final .eyebrow{position:relative;z-index:2;color:var(--red);display:block;margin-bottom:14px}
-.final h2{position:relative;z-index:2}
-.final .lead{position:relative;z-index:2;margin:14px auto 28px;color:#2b2b2b;text-align:center}
-.final .cta{position:relative;z-index:2;justify-content:center}
+/* ---------- BLOC FINAL — un aplat, pas un rectangle bordé ---------- */
+.slab{background:var(--app);color:var(--paper);padding:70px 32px;text-align:center;
+  position:relative;overflow:hidden}
+.slab .sq1{position:absolute;top:-40px;left:-30px;width:120px;height:120px;background:var(--ink);
+  animation:spin 20s linear infinite}
+.slab .tri2{position:absolute;bottom:-30px;right:-10px;width:0;height:0;border-left:58px solid transparent;
+  border-right:58px solid transparent;border-bottom:96px solid var(--paper);opacity:.3;
+  animation:bob 8s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.slab .eyebrow,.slab h2,.slab .lead,.slab .cta{position:relative;z-index:2}
+.slab .eyebrow{color:var(--yellow);display:block;margin-bottom:14px}
+.slab .lead{margin:14px auto 30px;color:var(--paper);text-align:center;opacity:.9}
+.slab .cta{justify-content:center}
 
-/* ---------- FOOTER ---------- */
-footer{background:var(--ink);color:var(--paper);padding:56px 0 50px;margin-top:10px}
+/* ---------- FOOTER — aplat encre ---------- */
+footer{background:var(--ink);color:var(--paper);padding:66px 0 56px}
 .foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
-footer h2{font-size:clamp(28px,3.6vw,40px)}
-footer .mail{display:inline-block;margin-top:12px;color:var(--yellow);font-family:var(--mono);font-size:14px;
+footer h2{font-size:clamp(28px,3.6vw,42px)}
+footer .mail{display:inline-block;margin-top:12px;color:var(--app-lite);font-family:var(--mono);font-size:14px;
   border-bottom:2px solid transparent;transition:border-color .22s}
-footer .mail:hover{border-color:var(--yellow)}
+footer .mail:hover{border-color:var(--app-lite)}
 .foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:#8f8f8f;line-height:1.9}
-.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--yellow)}
+.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--app-lite)}
 
-/* ---------- RÉVÉLATION ----------
-   Amélioration progressive : l'état masqué n'existe que si JS est actif. */
+/* ---------- RÉVÉLATION ---------- */
 .js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
   transition:clip-path .7s var(--ease),transform .7s var(--ease)}
 .js .rv.in{clip-path:inset(0 0 0 0);transform:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .rv{clip-path:none;transform:none}
+  /* niveaux figés, étiquettes lisibles, transcription complète */
+  .vu .lbl{opacity:1}
 }
 </style>
 </head>
 <body>
-<div class="frame">
 
   <nav>
     <div class="wrap nav-in">
@@ -198,19 +237,41 @@ footer .mail:hover{border-color:var(--yellow)}
 
   <div class="hero" id="top">
     <div class="hero-l">
-      <p class="eyebrow" style="color:var(--blue)">MACOS · 100% LOCAL · GRATUIT</p>
+      <p class="eyebrow">MACOS · 100% LOCAL · GRATUIT</p>
       <h1>Tes réunions,<br>transcrites &amp; résumées.</h1>
       <p class="sub">BlaBlaSpy enregistre tes réunions <strong>Teams</strong>, <strong>Google&nbsp;Meet</strong> ou <strong>Zoom</strong>, les transcrit sur ton Mac, et génère un compte-rendu PDF clair : résumé, décisions, actions à mener.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger pour macOS <span class="ar">↓</span></a>
-        <a class="btn ghost" href="https://github.com/sandrophoto/blablaspy">Voir le code</a>
+        <a class="lnk" href="https://github.com/sandrophoto/blablaspy">Voir le code</a>
       </div>
       <p class="ver">Transcription locale (WhisperKit) · Résumé IA au choix · Mises à jour auto</p>
     </div>
-    <div class="hero-r">
-      <div class="circle"></div>
-      <div class="tri"></div>
-      <div class="icon"><img src="icon.png" alt="Icône BlaBlaSpy"></div>
+
+    <div class="hero-r" id="panel">
+      <div class="circle par" data-d="14"></div>
+      <!-- effet signature : les 2 pistes captées, et la transcription qui s'écrit -->
+      <div class="mtg par" data-d="-8" aria-hidden="true">
+        <div class="mtg-head">
+          <span>RÉUNION · 12:04</span>
+          <span class="rec"><i></i>REC</span>
+        </div>
+        <div class="vu sys" id="vu-sys">
+          <span class="lbl">Système · Teams</span>
+          <div class="lane">
+            <div class="fill"></div>
+            <div class="segs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="vu mic" id="vu-mic">
+          <span class="lbl">Micro · Toi</span>
+          <div class="lane">
+            <div class="fill"></div>
+            <div class="segs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="scr" id="scr"></div>
+        <div class="mtg-foot"><span>2 PISTES · 48 kHz</span><span><b>WHISPERKIT · LOCAL</b></span></div>
+      </div>
       <div class="rules">
         <div>01 / TEAMS · MEET · ZOOM</div>
         <div>02 / TRANSCRIPTION LOCALE</div>
@@ -219,69 +280,57 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </div>
 
-  <div class="strip" id="strip">
-    <div class="cell">CAPTURE · 2 PISTES</div>
-    <div class="cell">TRANSCRIPTION · WHISPERKIT</div>
-    <div class="cell">RÉSUMÉ · APPLE · CLAUDE · CHATGPT</div>
-    <div class="cell">EXPORT · PDF &amp; TXT</div>
-    <div class="cell">100% LOCAL</div>
+  <div class="ticker" aria-hidden="true">
+    <div class="track" id="track"><b>Capture · 2 pistes</b><b>Transcription · WhisperKit</b><b>100% local</b></div>
   </div>
 
   <section id="features" class="wrap">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--red)">FONCTIONS</p>
-        <h2 class="rv" style="margin-top:14px">Tout ce qu'il faut,<br>rien de superflu.</h2>
-      </div>
+      <p class="eyebrow rv">FONCTIONS</p>
       <p class="note rv">De l'enregistrement au compte-rendu prêt à partager.</p>
     </div>
-    <div class="tiles rv">
-      <div class="tile" style="--accent:var(--blue)"><span class="ic">🎙️</span><h3>Capture 2 pistes</h3><p>Le son des participants (système) et ta voix (micro) sont captés séparément — même en clamshell ou avec une interface audio.</p></div>
-      <div class="tile" style="--accent:var(--red)"><span class="ic">⚡</span><h3>Transcription locale</h3><p>WhisperKit tourne sur le Neural Engine de ton Mac. Aucun audio n'est envoyé sur Internet.</p></div>
-      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🌍</span><h3>FR · EN · Auto</h3><p>Détection automatique de la langue, gérée piste par piste. Le bilinguisme ? Pas un souci.</p></div>
-      <div class="tile" style="--accent:var(--blue)"><span class="ic">🧠</span><h3>Résumé au choix</h3><p>Apple Intelligence (gratuit, local), Claude ou ChatGPT. Résumé, décisions, actions, points en suspens.</p></div>
-      <div class="tile" style="--accent:var(--red)"><span class="ic">📄</span><h3>Export PDF &amp; .txt</h3><p>Un compte-rendu mis en page, et la transcription brute. L'audio mixé en .m4a si tu veux.</p></div>
-      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🔄</span><h3>Mises à jour auto</h3><p>L'app se met à jour toute seule via Sparkle. Toujours la dernière version, sans effort.</p></div>
+    <h2 class="rv" style="margin-bottom:44px">Tout ce qu'il faut,<br>rien de superflu.</h2>
+    <div class="tiles">
+      <div class="tile rv"><span class="ic">🎙️</span><h3>Capture 2 pistes</h3><p>Le son des participants (système) et ta voix (micro) sont captés séparément — même en clamshell ou avec une interface audio.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">⚡</span><h3>Transcription locale</h3><p>WhisperKit tourne sur le Neural Engine de ton Mac. Aucun audio n'est envoyé sur Internet.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌍</span><h3>FR · EN · Auto</h3><p>Détection automatique de la langue, gérée piste par piste. Le bilinguisme ? Pas un souci.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🧠</span><h3>Résumé au choix</h3><p>Apple Intelligence (gratuit, local), Claude ou ChatGPT. Résumé, décisions, actions, points en suspens.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">📄</span><h3>Export PDF &amp; .txt</h3><p>Un compte-rendu mis en page, et la transcription brute. L'audio mixé en .m4a si tu veux.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🔄</span><h3>Mises à jour auto</h3><p>L'app se met à jour toute seule via Sparkle. Toujours la dernière version, sans effort.</p><div class="bar"></div></div>
     </div>
   </section>
 
   <section id="how" class="wrap" style="padding-top:0">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--blue)">COMMENT ÇA MARCHE</p>
-        <h2 class="rv" style="margin-top:14px">Quatre étapes,<br>c'est tout.</h2>
-      </div>
+      <p class="eyebrow rv">COMMENT ÇA MARCHE</p>
       <p class="note rv">Du gros bouton rouge au PDF, sans détour.</p>
     </div>
-    <div class="steps rv">
-      <div class="step"><div class="n">01</div><h4>Enregistre</h4><p>Lance ta réunion et clique sur le gros bouton rouge.</p></div>
-      <div class="step"><div class="n">02</div><h4>Les présents</h4><p>Renseigne qui était là (noms pré-remplis, éditables).</p></div>
-      <div class="step"><div class="n">03</div><h4>Transcris</h4><p>La transcription locale démarre et défile en direct.</p></div>
-      <div class="step"><div class="n">04</div><h4>Exporte</h4><p>Choisis les analyses, génère le PDF, c'est prêt.</p></div>
+    <h2 class="rv" style="margin-bottom:44px">Quatre étapes,<br>c'est tout.</h2>
+    <div class="steps">
+      <div class="step rv"><div class="n">01</div><h4>Enregistre</h4><p>Lance ta réunion et clique sur le gros bouton rouge.</p></div>
+      <div class="step rv"><div class="n">02</div><h4>Les présents</h4><p>Renseigne qui était là (noms pré-remplis, éditables).</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Transcris</h4><p>La transcription locale démarre et défile en direct.</p></div>
+      <div class="step rv"><div class="n">04</div><h4>Exporte</h4><p>Choisis les analyses, génère le PDF, c'est prêt.</p></div>
     </div>
   </section>
 
-  <section class="wrap" style="padding-top:0">
-    <div class="final rv">
-      <div class="sq1"></div>
-      <div class="sq2"></div>
-      <p class="eyebrow">CONFIDENTIALITÉ</p>
-      <h2>Tes réunions restent sur ton Mac.</h2>
-      <p class="lead">La transcription est 100% locale. Avec le résumé Apple Intelligence, rien ne quitte ta machine. Tu gardes le contrôle, et tu préviens les participant·es : l'enregistrement se fait avec leur accord.</p>
-      <div class="cta">
-        <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger gratuitement <span class="ar">↓</span></a>
-      </div>
+  <div class="slab">
+    <div class="sq1"></div>
+    <div class="tri2"></div>
+    <p class="eyebrow">CONFIDENTIALITÉ</p>
+    <h2>Tes réunions restent sur ton Mac.</h2>
+    <p class="lead">La transcription est 100% locale. Avec le résumé Apple Intelligence, rien ne quitte ta machine. Tu gardes le contrôle, et tu préviens les participant·es : l'enregistrement se fait avec leur accord.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/sandrophoto/blablaspy/releases/latest">Télécharger gratuitement <span class="ar">↓</span></a>
     </div>
-  </section>
+  </div>
 
   <section id="tech" class="wrap">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--red)">SOUS LE CAPOT</p>
-        <h2 class="rv" style="margin-top:14px">La recette maison.</h2>
-      </div>
+      <p class="eyebrow rv">SOUS LE CAPOT</p>
       <p class="note rv">Du natif, performant, sans dépendance à installer.</p>
     </div>
+    <h2 class="rv" style="margin-bottom:44px">La recette maison.</h2>
     <div class="chips rv">
       <div class="chip">ScreenCaptureKit</div>
       <div class="chip">AVFoundation</div>
@@ -307,9 +356,12 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </footer>
 
-</div>
-
 <script>
+/* Ticker : dupliqué pour une boucle sans couture */
+const words=["Capture · 2 pistes","Transcription · WhisperKit","Résumé · Apple · Claude · ChatGPT",
+             "Export · PDF & TXT","100% local","Mises à jour · Sparkle"];
+document.getElementById('track').innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
+
 /* Révélation au scroll — volet net, en cascade.
    Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
    une poignée d'éléments, c'est gratuit, et ça ne peut pas laisser la
@@ -328,16 +380,60 @@ addEventListener('resize',reveal);
 addEventListener('load',reveal);
 requestAnimationFrame(reveal);
 
-/* Bandeau : la cellule jaune se déplace de cellule en cellule */
-const cells=[...document.querySelectorAll('#strip .cell')];
-let ci=0;
-function tickStrip(){
-  cells.forEach(c=>c.classList.remove('on'));
-  cells[ci].classList.add('on');
-  ci=(ci+1)%cells.length;
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* Effet signature : la transcription s'écrit mot à mot, en alternant les
+   locuteurs ; le VU-mètre du locuteur actif s'allume. Sous reduced-motion,
+   tout le texte est affiché d'un coup et les niveaux restent figés. */
+const scr=document.getElementById('scr');
+const lines=[
+  {s:"TEAMS",c:"sys",t:"on décale la livraison à jeudi ?"},
+  {s:"TOI",  c:"mic",t:"ok, j'ajoute l'action pour Julie."},
+  {s:"TEAMS",c:"sys",t:"et le budget, on valide lundi."}
+];
+const vus={sys:document.getElementById('vu-sys'),mic:document.getElementById('vu-mic')};
+
+if(reduce){
+  scr.innerHTML=lines.map(l=>`<p class="ln"><b class="${l.c}">${l.s}</b>${l.t}</p>`).join('');
+  vus.sys.classList.add('on');vus.mic.classList.add('on');
+}else{
+  let li=0,wi=0,cur=null,ws=[];
+  function step(){
+    if(li>=lines.length){                       /* boucle propre : on repart à vide */
+      scr.innerHTML='';li=0;wi=0;cur=null;
+      setTimeout(step,800);return;
+    }
+    if(!cur){
+      const l=lines[li];ws=l.t.split(' ');wi=0;
+      cur=document.createElement('p');cur.className='ln';
+      cur.innerHTML=`<b class="${l.c}">${l.s}</b><span></span>`;
+      scr.appendChild(cur);
+      vus.sys.classList.toggle('on',l.c==='sys');
+      vus.mic.classList.toggle('on',l.c==='mic');
+    }
+    const sp=cur.lastElementChild;
+    sp.textContent+=(wi?' ':'')+ws[wi];wi++;
+    if(wi>=ws.length){cur=null;li++;setTimeout(step,950);}
+    else setTimeout(step,110+Math.random()*120);
+  }
+  setTimeout(step,600);
 }
-tickStrip();
-if(!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(tickStrip,2200);
+
+/* Parallaxe : les formes suivent le pointeur, chacune à sa profondeur */
+const panel=document.getElementById('panel');
+if(!reduce){
+  panel.addEventListener('pointermove',e=>{
+    const r=panel.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    panel.querySelectorAll('.par').forEach(el=>{
+      const d=+el.dataset.d;
+      el.style.translate=`${x*d}px ${y*d}px`;
+    });
+  });
+  panel.addEventListener('pointerleave',()=>{
+    panel.querySelectorAll('.par').forEach(el=>el.style.translate='0px 0px');
+  });
+}
 </script>
 </body>
 </html>
