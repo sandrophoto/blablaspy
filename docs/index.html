@@ -147,6 +147,58 @@ nav .btn{padding:11px 16px}
 .ticker b::after{content:"";width:7px;height:7px;background:var(--app-lite);flex:none}
 @keyframes scrollx{to{transform:translateX(-50%)}}
 
+/* ---------- L'APP ----------
+   Maquette de l'écran réel : mêmes libellés, même déroulé (les étapes franchies
+   se replient en lignes, seule l'étape en cours reste dépliée). Rendue en
+   aplats plutôt qu'en capture : pas de bordures, pas d'arrondis. */
+.shot{background:var(--paper-2);overflow:hidden}
+.shot .bar{background:var(--ink);padding:11px 16px;display:flex;align-items:center;gap:8px}
+.shot .bar i{width:9px;height:9px;border-radius:50%;flex:none}
+.shot .bar i:nth-child(1){background:var(--red)}
+.shot .bar i:nth-child(2){background:var(--yellow)}
+.shot .bar i:nth-child(3){background:var(--app-lite)}
+.shot .bar span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#8f8f8f;margin-left:8px}
+.shot .body{padding:22px}
+/* étape franchie, repliée */
+.done{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--paper);margin-bottom:8px}
+.done .no{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--app);flex:none}
+.done .ttl{font-size:14px;font-weight:800;letter-spacing:-.01em}
+.done .sum{font-family:var(--mono);font-size:11px;color:#5a5a5a;margin-left:auto;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.done .ok{color:var(--app);font-weight:700;flex:none}
+/* étape en cours, dépliée */
+.live{background:var(--white);padding:18px}
+.live-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.live-h .no{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--app)}
+.live-h h4{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.live-h .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--paper);
+  background:var(--app);padding:3px 8px}
+.grp{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8f8f8f;margin:16px 0 7px}
+/* sélecteur segmenté (le Picker .segmented de l'app) */
+.seg{display:flex;gap:2px;width:200px}
+.seg span{flex:1;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  padding:7px 0;background:var(--paper-2);color:#5a5a5a}
+.seg span.on{background:var(--app);color:var(--paper)}
+/* une ligne de réglage : interrupteur + libellé */
+.role{display:flex;align-items:center;gap:12px;padding:9px 10px;background:var(--paper-2);margin-bottom:4px}
+.role .nm{font-size:13.5px;font-weight:700}
+.role .meta{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:#5a5a5a}
+.sw{width:26px;height:14px;background:var(--app);flex:none;display:flex;align-items:center;
+  justify-content:flex-end;padding:2px}
+.sw::after{content:"";width:10px;height:10px;background:var(--white)}
+.sw.off{background:#c9c9c9;justify-content:flex-start}
+.seal{width:14px;height:14px;background:var(--app);flex:none;display:grid;place-items:center;
+  font-size:9px;color:var(--paper);line-height:1}
+/* une ligne d'export : pastille, intitulé, sous-titre, bouton */
+.exp{display:flex;align-items:center;gap:12px;padding:11px 10px;background:var(--paper-2);margin-bottom:4px}
+.exp .sq{width:16px;height:16px;background:var(--app);flex:none}
+.exp h5{font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+.exp .sub2{font-family:var(--mono);font-size:10px;color:#5a5a5a;margin-top:3px}
+.exp .go{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 12px;white-space:nowrap}
+@media(max-width:620px){.exp .sub2{display:none}}
+
 /* ---------- SECTIONS ---------- */
 section{padding:74px 0}
 .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
@@ -227,6 +279,7 @@ footer .mail:hover{border-color:var(--app-lite)}
         <span class="name">BlaBlaSpy</span>
       </a>
       <div class="nav-links">
+        <a href="#app">L'app</a>
         <a href="#features">Fonctions</a>
         <a href="#how">Comment ça marche</a>
         <a href="#tech">Technos</a>
@@ -284,7 +337,59 @@ footer .mail:hover{border-color:var(--app-lite)}
     <div class="track" id="track"><b>Capture · 2 pistes</b><b>Transcription · WhisperKit</b><b>100% local</b></div>
   </div>
 
-  <section id="features" class="wrap">
+  <section id="app" class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow rv">L'APP</p>
+      <p class="note rv">L'étape 4 sur 4, en cours.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:40px">Tu décides de ce que<br>le compte-rendu raconte.</h2>
+    <div class="shot rv" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span>BLABLASPY PRO PLUS 3000</span></div>
+      <div class="body">
+        <!-- les étapes franchies se replient en lignes, comme dans l'app -->
+        <div class="done"><span class="no">01</span><span class="ttl">Enregistrer la réunion</span><span class="sum">Réunion de 12:04 enregistrée</span><span class="ok">✓</span></div>
+        <div class="done"><span class="no">02</span><span class="ttl">Qui était présent ?</span><span class="sum">Julie, Marc, Sofia</span><span class="ok">✓</span></div>
+        <div class="done"><span class="no">03</span><span class="ttl">Transcription</span><span class="sum">148 segments · Automatique</span><span class="ok">✓</span></div>
+
+        <!-- seule l'étape en cours reste dépliée -->
+        <div class="live">
+          <div class="live-h"><span class="no">04</span><h4>Compte-rendu &amp; exports</h4><span class="cnt">4/4</span></div>
+
+          <p class="grp">Langue du compte-rendu (PDF)</p>
+          <div class="seg"><span class="on">Français</span><span>English</span></div>
+
+          <p class="grp">Analyses à inclure</p>
+          <div class="role"><span class="sw"></span><span class="nm">Résumé</span></div>
+          <div class="role"><span class="sw"></span><span class="nm">Points abordés</span></div>
+          <div class="role"><span class="sw"></span><span class="nm">Décisions prises</span></div>
+          <div class="role"><span class="sw"></span><span class="nm">Actions à mener</span></div>
+          <div class="role"><span class="sw off"></span><span class="nm">Sujets en suspens</span></div>
+
+          <p class="grp">Moteur de résumé</p>
+          <div class="role"><span class="seal">✓</span><span class="nm">Claude (Anthropic)</span><span class="meta">Changer…</span></div>
+
+          <p class="grp">Options d'export</p>
+          <div class="exp">
+            <span class="sq"></span>
+            <div><h5>Compte-rendu PDF</h5><span class="sub2">Le compte-rendu est rédigé au moment de l'export</span></div>
+            <span class="go">Générer &amp; enregistrer…</span>
+          </div>
+          <div class="exp">
+            <span class="sq"></span>
+            <div><h5>Transcription (.txt)</h5><span class="sub2">Texte brut, préfixé Moi / Participant·es</span></div>
+            <span class="go">Exporter le .txt…</span>
+          </div>
+          <div class="exp">
+            <span class="sq"></span>
+            <div><h5>Audio de la réunion (.m4a)</h5><span class="sub2">Vos deux pistes mixées en un fichier</span></div>
+            <span class="go">Enregistrer l'audio…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="wrap" style="padding-top:0">
     <div class="sec-head">
       <p class="eyebrow rv">FONCTIONS</p>
       <p class="note rv">De l'enregistrement au compte-rendu prêt à partager.</p>
