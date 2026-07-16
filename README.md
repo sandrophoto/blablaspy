@@ -52,4 +52,4 @@ SwiftUI · ScreenCaptureKit · AVFoundation · WhisperKit · Apple Intelligence 
 ./publish.sh 1.x           # build + release GitHub + appcast (Sparkle)
 ```
 
-<div align="center"><sub>© 2026 STUPID STUDIO — Des apps macOS qui font une chose, très bien.</sub></div>
+<div align="center"><sub>© 2026 STUPIDS STUDIO — Des apps macOS qui font une chose, très bien.</sub></div>
